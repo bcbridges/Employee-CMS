@@ -3,11 +3,11 @@ const Sequelize = require("sequelize");
 // Create a connection object
 const sequelize = new Sequelize(
   // Database name
-  "library_db",
+  "employeeCMS_db",
   // User
   "root",
   // Password
-  "myPassword",
+  "vieo;%#Jnviorevme",
   {
     // Database location
     host: "localhost",
