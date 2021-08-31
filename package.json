@@ -1,0 +1,17 @@
+{
+  "name": "employee-cms",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "Brice Bridges",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "inquirer": "^6.5.0",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.3.5"
+  }
+}
