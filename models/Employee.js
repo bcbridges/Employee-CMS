@@ -1,6 +1,5 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
-const Role = require("./Role");
 
 class Employee extends Model {}
 
@@ -26,20 +25,23 @@ Employee.init(
         isAlpha: true,
       },
     },
+    role_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "role",
+        key: "id",
+      },
+    },
+    manager_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "employee",
+        key: "id",
+      },
+    },
   },
   {
     // If time allows, add hook to uppercase first letter of each department word
-
-    // hooks: {
-    //   beforeCreate: async (newDepartmentData) => {
-    //     newUserData.email = await newUserData.email.toLowerCase();
-    //     return newUserData;
-    //   },
-    //   beforeUpdate: async (updatedUserData) => {
-    //     updatedUserData.email = await updatedUserData.email.toLowerCase();
-    //     return updatedUserData;
-    //   },
-    // },
     sequelize,
     timestamps: false,
     freezeTableName: true,
@@ -47,11 +49,5 @@ Employee.init(
     modelName: "employee",
   }
 );
-
-// Defines association to dbo.role
-Role.hasMany(Employee);
-
-// Defines self-association from manager_id to id
-Employee.hasMany(Employee);
 
 module.exports = Employee;

@@ -1,6 +1,5 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
-const Department = require("./Department");
 
 class Role extends Model {}
 
@@ -23,20 +22,15 @@ Role.init(
       type: DataTypes.DECIMAL,
       allowNull: false,
     },
+    department_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "department",
+        key: "id",
+      },
+    },
   },
   {
-    // If time allows, add hook to uppercase first letter of each department word
-
-    // hooks: {
-    //   beforeCreate: async (newDepartmentData) => {
-    //     newUserData.email = await newUserData.email.toLowerCase();
-    //     return newUserData;
-    //   },
-    //   beforeUpdate: async (updatedUserData) => {
-    //     updatedUserData.email = await updatedUserData.email.toLowerCase();
-    //     return updatedUserData;
-    //   },
-    // },
     sequelize,
     timestamps: false,
     freezeTableName: true,
@@ -44,7 +38,5 @@ Role.init(
     modelName: "role",
   }
 );
-
-Department.hasMany(Role);
 
 module.exports = Role;

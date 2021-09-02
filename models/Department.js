@@ -21,17 +21,6 @@ Department.init(
   },
   {
     // If time allows, add hook to uppercase first letter of each department word
-
-    // hooks: {
-    //   beforeCreate: async (newDepartmentData) => {
-    //     newUserData.email = await newUserData.email.toLowerCase();
-    //     return newUserData;
-    //   },
-    //   beforeUpdate: async (updatedUserData) => {
-    //     updatedUserData.email = await updatedUserData.email.toLowerCase();
-    //     return updatedUserData;
-    //   },
-    // },
     sequelize,
     timestamps: false,
     freezeTableName: true,
