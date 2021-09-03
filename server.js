@@ -27,11 +27,11 @@ async function mainMenu() {
         },
         {
           name: "View All Employees By Department",
-          value: "viewEmplsByDepts",
+          value: "viewEmplsByDept",
         },
         {
           name: "View All Employees By Manager",
-          value: "ViewEmplsByMan",
+          value: "viewEmplsByMan",
         },
         {
           name: "Add Employee",
@@ -74,10 +74,50 @@ async function mainMenu() {
           value: "removeDept",
         },
         {
-          name: "exit",
+          name: "Exit",
           value: "exit",
         },
       ],
     },
   ]);
+  switch (choice) {
+    case "viewEmpls":
+      return "View All Employee Fn";
+      break;
+    case "viewEmplsByDept":
+      return "View all Empls by Dept Fn";
+      break;
+    case "viewEmplsByMan":
+      return "View Empls by Man Fn";
+      break;
+    case "addEmpl":
+      return "Add an Empls Fn";
+      break;
+    case "removeEmpl":
+      return "Remove an Empl Fn";
+      break;
+    case "updtEmplRole":
+      return "Update Empl Role Fn";
+      break;
+    case "updtEmplMan":
+      return "Update Empl Man Fn";
+      break;
+    case "allRoles":
+      return "Show all roles Fn";
+      break;
+    case "removeRole":
+      return "Remove role Fn";
+      break;
+    case "allDepts":
+      return "Show all Depts Fn";
+      break;
+    case "newDept":
+      return "Add a new dept Fn";
+      break;
+    case "removeDept":
+      return "Remove a dept Fn";
+      break;
+    default:
+      console.log("Exited out of the program");
+  }
 }
