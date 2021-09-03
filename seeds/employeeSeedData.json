@@ -1,0 +1,52 @@
+[
+  {
+    "first_name": "Jeremiah",
+    "last_name": "Owen",
+    "role_id": 13,
+    "manager_id": 1
+  },
+  {
+    "first_name": "Megan",
+    "last_name": "Hasz",
+    "role_id": 1,
+    "manager_id": 1
+  },
+
+  {
+    "first_name": "Kelsea",
+    "last_name": "Anaya",
+    "role_id": 2,
+    "manager_id": 2
+  },
+  {
+    "first_name": "Rebecca",
+    "last_name": "Blonder",
+    "role_id": 4,
+    "manager_id": 1
+  },
+  {
+    "first_name": "Alex",
+    "last_name": "Gutman",
+    "role_id": 3,
+    "manager_id": 4
+  },
+  {
+    "first_name": "Lindsay",
+    "last_name": "Winters",
+    "role_id": 6,
+    "manager_id": 1
+  },
+  {
+    "first_name": "Kayla",
+    "last_name": "Farber",
+    "role_id": 6,
+    "manager_id": 6
+  },
+
+  {
+    "first_name": "Logan",
+    "last_name": "Hall",
+    "role_id": 12,
+    "manager_id": 1
+  }
+]

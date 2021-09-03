@@ -13,9 +13,9 @@ Role.hasMany(Employee, {
   onDelete: "CASCADE",
 });
 
-Employee.hasMany(Employee, {
-  foreignKey: "employee_id",
-  onDelete: "CASCADE",
-});
+// Employee.hasMany(Employee, {
+//   foreignKey: "employee_id",
+//   onDelete: "CASCADE",
+// });
 
 module.exports = { Employee, Role, Department };

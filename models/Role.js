@@ -12,7 +12,7 @@ Role.init(
       autoIncrement: true,
     },
     title: {
-      type: DataTypes.STRING(30),
+      type: DataTypes.STRING(50),
       allowNull: false,
       validate: {
         isAlpha: true,
