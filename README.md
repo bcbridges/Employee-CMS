@@ -24,13 +24,13 @@ This Employee Content Management System (CMS) was designed to help track departm
 
 ## Installation
 
-Clone this repository down to your computer, and install all required modules using 'npm i'. -- add additional installation instructions
+The user must navigate to the cloned repository within the terminal and use the command 'npm i' to install node modules. To initialize the databases, use the schema.sql file to create the blank databases. There is seed data provided and can be populated within the database using 'npm run seed'.
 
 ## Usage
 
-The user must navigate to the cloned repository within the terminal and use the command 'node index.js'. -- add additional usage instructions.
+To start the application, use the command 'node server.js'. The user will be prompted to view data about the company and given the ability to enter new data into the database using the console line. When the user exists the program, the console will be exited allowing the user to directly re-lauch the application.
 
--- Add the link to the video here.
+You can find a video tutorial of the application here: https://drive.google.com/drive/folders/1tp9x6FiX4d6reYMXRZS_JOWF9L-Su-y_?usp=sharing
 
 ## Credits
 
@@ -46,7 +46,7 @@ Email me, located in the Questions section of the README.
 
 ## Tests
 
--- Add test information for this applicaiton.
+There were no tests created for this application.
 
 ## Questions
 
