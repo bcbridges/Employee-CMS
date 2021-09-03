@@ -31,28 +31,12 @@ async function mainMenu() {
           value: "viewEmpls",
         },
         {
-          name: "View All Employees By Department",
-          value: "viewEmplsByDept",
-        },
-        {
-          name: "View All Employees By Manager",
-          value: "viewEmplsByMan",
-        },
-        {
           name: "Add Employee",
           value: "newEmpl",
         },
         {
-          name: "Remove Employee",
-          value: "removeEmpl",
-        },
-        {
           name: "Update Employee Role",
           value: "updtEmplRole",
-        },
-        {
-          name: "Update Employee Manager",
-          value: "updtEmplMan",
         },
         {
           name: "View All Roles",
@@ -63,20 +47,12 @@ async function mainMenu() {
           value: "newRole",
         },
         {
-          name: "Remove Role",
-          value: "removeRole",
-        },
-        {
           name: "View All Departments",
           value: "allDepts",
         },
         {
           name: "Add Department",
           value: "newDept",
-        },
-        {
-          name: "Remove Department",
-          value: "removeDept",
         },
         {
           name: "Exit",
@@ -89,17 +65,8 @@ async function mainMenu() {
     case "viewEmpls":
       return allEmpls();
       break;
-    case "viewEmplsByDept":
-      return "View all Empls by Dept Fn";
-      break;
-    case "viewEmplsByMan":
-      return "View Empls by Man Fn";
-      break;
     case "addEmpl":
-      return "Add an Empls Fn";
-      break;
-    case "removeEmpl":
-      return "Remove an Empl Fn";
+      return "Add Empl Fn";
       break;
     case "updtEmplRole":
       return "Update Empl Role Fn";
@@ -108,22 +75,34 @@ async function mainMenu() {
       return "Update Empl Man Fn";
       break;
     case "allRoles":
-      return "Show all roles Fn";
-      break;
-    case "removeRole":
-      return "Remove role Fn";
+      return allRoles();
       break;
     case "allDepts":
-      return "Show all Depts Fn";
+      return allDepts();
       break;
     case "newDept":
       return "Add a new dept Fn";
       break;
-    case "removeDept":
-      return "Remove a dept Fn";
-      break;
+
+    // BONUS Q's
+    // case "viewEmplsByDept":
+    //   return "View all Empls by Dept Fn";
+    //   break;
+    // case "viewEmplsByMan":
+    //   return "View Empls by Man Fn";
+    //   break;
+    // case "removeEmpl":
+    //   return "Remove an Empl Fn";
+    //   break;
+    // case "removeRole":
+    //   return "Remove role Fn";
+    //   break;
+    // case "removeDept":
+    //   return "Remove a dept Fn";
+    //   break;
+
     default:
-      console.log("Exited out of the program");
+      process.exit();
   }
 }
 
@@ -131,10 +110,34 @@ async function allEmpls() {
   try {
     const employees = await Employee.findAll();
     const employeeClean = employees.map((empl) => empl.get({ plain: true }));
-    console.log("\n");
+    console.log("\n\n");
     console.table(employeeClean);
     mainMenu();
   } catch (err) {
-    console.log("allEmpl API error");
+    console.log("allEmpl API error.");
+  }
+}
+
+async function allRoles() {
+  try {
+    const roles = await Role.findAll();
+    const roleClean = roles.map((role) => role.get({ plain: true }));
+    console.log("\n\n");
+    console.table(roleClean);
+    mainMenu();
+  } catch (err) {
+    console.log("allRole API error.");
+  }
+}
+
+async function allDepts() {
+  try {
+    const depts = await Department.findAll();
+    const deptClean = depts.map((dept) => dept.get({ plain: true }));
+    console.log("\n\n");
+    console.table(deptClean);
+    mainMenu();
+  } catch (err) {
+    console.log("allDept API error.");
   }
 }
