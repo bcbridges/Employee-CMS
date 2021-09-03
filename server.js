@@ -1,18 +1,23 @@
 const { prompt } = require("inquirer");
-const express = require("express");
+const router = require("express").Router();
 const mysql = require("mysql2");
-
-const app = express();
+const { Department, Role, Employee } = require("./models");
+const logo = require("asciiart-logo");
+const cTable = require("console.table");
 
 // Import the connection object
 const sequelize = require("./config/connection");
-
 // turn on connection to db and server
 // force true to drop and recreate table(s) on every sync
-sequelize
-  .sync({ force: false })
-  .then(mainMenu())
-  .catch((err) => console.log(err));
+start();
+function start() {
+  const logoText = logo({ name: "Employee CMS" }).render();
+  console.log(logoText);
+  sequelize
+    .sync({ force: false })
+    .then(mainMenu())
+    .catch((err) => console.log(err));
+}
 
 async function mainMenu() {
   const { choice } = await prompt([
@@ -82,7 +87,7 @@ async function mainMenu() {
   ]);
   switch (choice) {
     case "viewEmpls":
-      return "View All Employee Fn";
+      return allEmpls();
       break;
     case "viewEmplsByDept":
       return "View all Empls by Dept Fn";
@@ -119,5 +124,17 @@ async function mainMenu() {
       break;
     default:
       console.log("Exited out of the program");
+  }
+}
+
+async function allEmpls() {
+  try {
+    const employees = await Employee.findAll();
+    const employeeClean = employees.map((empl) => empl.get({ plain: true }));
+    console.log("\n");
+    console.table(employeeClean);
+    mainMenu();
+  } catch (err) {
+    console.log("allEmpl API error");
   }
 }
