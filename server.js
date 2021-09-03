@@ -1,9 +1,6 @@
-const inquirer = require("inquirer");
+const { prompt } = require("inquirer");
 const express = require("express");
 const mysql = require("mysql2");
-const dept = require("./models/Department");
-const role = require("./models/Role");
-const empl = require("./models/Employee");
 
 const app = express();
 
@@ -13,25 +10,74 @@ const sequelize = require("./config/connection");
 // turn on connection to db and server
 // force true to drop and recreate table(s) on every sync
 sequelize
-  .sync({ force: true })
-  .then(() => {
-    console.log("Now listening");
-  })
+  .sync({ force: false })
+  .then(mainMenu())
   .catch((err) => console.log(err));
 
-// Add function to ask view all depts, view all roles, view all employees, add a dept, add a role, add an empl, and update employee role.
-// depts - department names & roles
-// roles - job title, role id, the dept that role belongs to, the salary for that role
-// empls - employee id, first name, last name, job titles, departments, salaries, managers
-// add dept - enter department name
-// add role - name, salary, and department for that role
-// add empl - first name, last name, role, & manager
-// add empl role - select empl from list and update their role
-
-// BONUS
-
-// Update empl managers
-// View empls by manager
-// View empls by dept
-// Delete depts, roles, and empls
-// View the total utilized budget of a department
+async function mainMenu() {
+  const { choice } = await prompt([
+    {
+      type: "list",
+      name: "choice",
+      message: "Welcome! What would you like to do?",
+      choices: [
+        {
+          name: "View All Employees",
+          value: "viewEmpls",
+        },
+        {
+          name: "View All Employees By Department",
+          value: "viewEmplsByDepts",
+        },
+        {
+          name: "View All Employees By Manager",
+          value: "ViewEmplsByMan",
+        },
+        {
+          name: "Add Employee",
+          value: "newEmpl",
+        },
+        {
+          name: "Remove Employee",
+          value: "removeEmpl",
+        },
+        {
+          name: "Update Employee Role",
+          value: "updtEmplRole",
+        },
+        {
+          name: "Update Employee Manager",
+          value: "updtEmplMan",
+        },
+        {
+          name: "View All Roles",
+          value: "allRoles",
+        },
+        {
+          name: "Add Role",
+          value: "newRole",
+        },
+        {
+          name: "Remove Role",
+          value: "removeRole",
+        },
+        {
+          name: "View All Departments",
+          value: "allDepts",
+        },
+        {
+          name: "Add Department",
+          value: "newDept",
+        },
+        {
+          name: "Remove Department",
+          value: "removeDept",
+        },
+        {
+          name: "exit",
+          value: "exit",
+        },
+      ],
+    },
+  ]);
+}
