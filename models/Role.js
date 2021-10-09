@@ -14,9 +14,6 @@ Role.init(
     title: {
       type: DataTypes.STRING(50),
       allowNull: false,
-      validate: {
-        isAlpha: true,
-      },
     },
     salary: {
       type: DataTypes.DECIMAL,
