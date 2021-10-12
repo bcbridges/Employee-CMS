@@ -104,7 +104,6 @@ async function allEmpls() {
         emp.role = emp.role.title;
         return emp;
       });
-    console.log(employeeClean);
     console.log("\n\n");
     console.table(employeeClean);
     mainMenu();
