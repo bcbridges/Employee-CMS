@@ -33,7 +33,7 @@ async function mainMenu() {
         },
         {
           name: "Add Employee",
-          value: "newEmpl",
+          value: "addEmpl",
         },
         {
           name: "Update Employee Role",
@@ -73,36 +73,16 @@ async function mainMenu() {
       return allDepts();
       break;
     case "addEmpl":
-      return "Add Empl Fn";
+      return addEmpl();
       break;
     case "updtEmplRole":
-      return "Update Empl Role Fn";
-      break;
-    case "updtEmplMan":
-      return "Update Empl Man Fn";
+      return updateEmplRole();
       break;
     case "newDept":
       return addDept();
     case "newRole":
       return addRole();
       break;
-
-    // BONUS Q's
-    // case "viewEmplsByDept":
-    //   return "View all Empls by Dept Fn";
-    //   break;
-    // case "viewEmplsByMan":
-    //   return "View Empls by Man Fn";
-    //   break;
-    // case "removeEmpl":
-    //   return "Remove an Empl Fn";
-    //   break;
-    // case "removeRole":
-    //   return "Remove role Fn";
-    //   break;
-    // case "removeDept":
-    //   return "Remove a dept Fn";
-    //   break;
 
     default:
       process.exit();
@@ -111,8 +91,20 @@ async function mainMenu() {
 
 async function allEmpls() {
   try {
-    const employees = await Employee.findAll();
-    const employeeClean = employees.map((empl) => empl.get({ plain: true }));
+    const employees = await Employee.findAll({
+      attributes: ["id", "first_name", "last_name"],
+      include: {
+        model: Role,
+        attributes: ["title"],
+      },
+    });
+    const employeeClean = employees
+      .map((empl) => empl.get({ plain: true }))
+      .map((emp) => {
+        emp.role = emp.role.title;
+        return emp;
+      });
+    console.log(employeeClean);
     console.log("\n\n");
     console.table(employeeClean);
     mainMenu();
@@ -196,6 +188,104 @@ async function addRole() {
     });
     console.log("\n\n");
     console.log("The role has been added!");
+    console.log("\n");
+    mainMenu();
+  });
+}
+
+async function addEmpl() {
+  const roleRaw = await Role.findAll();
+  const cleanRole = roleRaw
+    .map((role) => role.get({ plain: true }))
+    .map(({ title }) => title);
+  const manRaw = await Employee.findAll();
+  const cleanMan = manRaw
+    .map((empl) => empl.get({ plain: true }))
+    .map(({ id, first_name, last_name }) => {
+      return id + " : " + first_name + " " + last_name;
+    });
+
+  const newEmpl = await prompt([
+    {
+      type: "input",
+      name: "firstName",
+      message: "What is the employee's first name?",
+    },
+    {
+      type: "input",
+      name: "lastName",
+      message: "What is the employee's last name?",
+    },
+    {
+      type: "list",
+      name: "role",
+      message: "What is the employee's role?",
+      choices: cleanRole,
+    },
+    {
+      type: "list",
+      name: "manager",
+      message: "Who is the employee's manager?",
+      choices: cleanMan,
+    },
+  ]).then(async (res) => {
+    const roleIdRaw = await Role.findOne({
+      where: { title: res.role },
+    });
+    const managerId = parseInt(res.manager.charAt(0));
+
+    Employee.create({
+      first_name: res.firstName,
+      last_name: res.lastName,
+      role_id: roleIdRaw.dataValues.id,
+      manager_id: managerId,
+    });
+    console.log("\n\n");
+    console.log("The employee has been added!");
+    console.log("\n");
+    mainMenu();
+  });
+}
+
+async function updateEmplRole() {
+  const roleRaw = await Role.findAll();
+  const cleanRole = roleRaw
+    .map((role) => role.get({ plain: true }))
+    .map(({ title }) => title);
+
+  const emplRaw = await Employee.findAll();
+  const emplClean = emplRaw
+    .map((empl) => empl.get({ plain: true }))
+    .map(({ id, first_name, last_name }) => {
+      return id + " : " + first_name + " " + last_name;
+    });
+  await prompt([
+    {
+      type: "list",
+      name: "employee",
+      message: "Who would you like to update?",
+      choices: emplClean,
+    },
+    {
+      type: "list",
+      name: "role",
+      message: "What is their new role?",
+      choices: cleanRole,
+    },
+  ]).then(async (res) => {
+    const roleIdRaw = await Role.findOne({
+      where: { title: res.role },
+    });
+
+    const emplId = parseInt(res.employee.charAt(0));
+
+    Employee.update(
+      { role_id: roleIdRaw.dataValues.id },
+      { where: { id: emplId } }
+    );
+
+    console.log("\n\n");
+    console.log("The employee's role has been updated'!");
     console.log("\n");
     mainMenu();
   });
